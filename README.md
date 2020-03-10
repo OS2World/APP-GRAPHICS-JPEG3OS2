@@ -5,7 +5,7 @@ Port to OS/2 of the Independent JPEG Group's JPEG version 3 software.
 * GNU GPL V2
 
 ## COMPILE TOOLS
-* 
+* gcc
  
 ## AUTHORS
 * Port: John H. Kim

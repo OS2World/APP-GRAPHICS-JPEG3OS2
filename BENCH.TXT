@@ -1,0 +1,69 @@
+I ran some benchmarks with the Independent JPEG Group's JPEG software,
+version 3.  I ran a DOS 8086 version, a DOS386 version, a DOS386 version 
+using flat memory addressing, and an OS/2 version (also flat memory).
+The first two were compiled with Intel C, the latter two were compiled
+with ports of gcc 2.1).  This version of JPEG uses no floating point math.
+
+I used four JPEG images that had come over USENET in the past few weeks.
+They were magellan.jpg, solarmax.jpg, titan2.jpg, and blacktip.jpg.
+
+My machine is a 386/33 with 32k cache and 8MB of RAM.
+
+I ran DOS and DOS386 trials under DOS 5.0 with a 1MB ram disk.  In no
+trial did swapping occur (the DOS386 version will write temporary files
+to disk if it runs out of RAM).  This program does very little disk i/o
+so writes to the ram disk made a minimal, if not negligible, impact on
+the final times.
+
+I ran the OS/2 trials with nothing else running except OS/2 itself.
+I freed up as much memory as possible (I wanted to compare CPU time)
+by removing DOS support and booting to the command line, not the WPS.
+As with the DOS versions, I ran everything off a 1MB ram disk.  No
+swapping occured during any trial.
+
+First I converted each of these images to GIF format using djpeg -G.
+I ran each image and binary three times and averaged the times (all
+trials were within 0.5 seconds).
+
+The average times and time ratios, with OS/2 set at 100%, follow:
+
++-----------------------------------------------------------------------+
+| djpeg \ OS   | OS/2 (flat) | DOS386 flat |   DOS 386   |      DOS     |
+|--------------+-------------+-------------+-------------+--------------|
+| magellan.jpg | 32.9s  100% | 33.3s  101% | 39.5s  120% |  59.7s  181% |
+| solarmax.jpg | 28.3s  100% | 28.4s  100% | 35.0s  124% |  52.7s  186% |
+| titan2.jpg   | 33.0s  100% | 33.2s  101% | 41.2s  125% |  61.6s  187% |
+| blacktip.jpg | 66.0s  100% | 65.8s  100% | 78.0s  118% | 117.8s  178% |
+|--------------+-------------+-------------+-------------+--------------|
+| average      |     100%    |     100%    |    122%     |      183%    |
++-----------------------------------------------------------------------+
+
+I then converted the GIFs back to JPEGs using the default settings
+on cjpeg (i.e. no switches).  Same comments apply as with djpeg.
+
++-----------------------------------------------------------------------+
+| cjpeg \ OS   | OS/2 (flat) | DOS386 flat |   DOS 386   |      DOS     |
+|--------------+-------------+-------------+-------------+--------------|
+| magellan.jpg | 26.4s  100% | 26.7s  101% | 28.5s  108% |  63.6s  241% |
+| solarmax.jpg | 21.3s  100% | 21.3s  100% | 23.1s  108% |  51.2s  240% |
+| titan2.jpg   | 25.2s  100% | 25.3s  100% | 27.4s  109% |  60.7s  241% |
+| blacktip.jpg | 54.2s  100% | 54.4s  100% | 58.5s  108% | 131.4s  242% |
+|--------------+-------------+-------------+-------------+--------------|
+| average      |     100%    |     100%    |    108%     |      241%    |
++-----------------------------------------------------------------------+
+
+I guess a flat address space DOES make a difference.
+
+(yes, I know the average percent should be weighted according to
+the amount of time each file took.  I didn't feel like complicating
+things that much.)
+
+When I ran the trials off my hard disk with a cache set up, all times
+were about 5% slower.  This will obviously vary with your hardware,
+but it means that a segmented addressing scheme can cause more of a
+performance hit than accessing the input and output files on hard disk
+through a cache.
+--
+April 29, 1992
+John H. Kim
+jokim@jarthur.claremont.edu

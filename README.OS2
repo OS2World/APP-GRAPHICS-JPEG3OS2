@@ -1,0 +1,20 @@
+Compiled with Michael Johnson's port of gcc 2.1 to OS/2.  This software
+is a port to OS/2 of the Independent JPEG Group's JPEG version 3 software.
+
+The j?main.c files are modified to give a running account of the
+percentage of the file conversion completed.  The binaries also give
+friendlier on-line help.  I basically cut and pasted from the DOS
+sources for j?main.c so I can't guarantee that everything the on-line
+help says is correct (although I tried to make it correct).
+
+No memory manager is used - it assumes you have as much memory as the
+program will ever need via both RAM and virtual memory.  This may be
+a problem if you don't have swapping enabled, or your swapspace is very
+small.
+
+For more information on JPEG, look for the JPEG FAQ, occasionally posted
+to alt.graphics.pixutils, alt.binaries.pictures.d, etc.
+--
+April 29, 1992
+John H. Kim
+jokim@jarthur.claremont.edu
